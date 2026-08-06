@@ -1,0 +1,628 @@
+{
+  "$schema": "./repository-relationships.schema.json",
+  "audience": "public",
+  "generated": {
+    "complete_for_visibility": "public",
+    "generated_at": "2026-08-05T23:41:16Z",
+    "generator_version": "2026-08-04.1",
+    "inventory_digest": "sha256:88f5eeb87bb5a0ab3b9428ebe943cf1dcfa24d41198e39de093b26418725e47f",
+    "managed_by": "ore-repository-relationship-rollout",
+    "omitted_repository_count": 0,
+    "private_repositories_omitted": false,
+    "source": "GitHub GraphQL repository inventory plus reviewed manual declarations"
+  },
+  "owner": {
+    "account_type": "organization",
+    "dotgithub_repository": "hacker-house-medellin/.github",
+    "github_id": "313129602",
+    "linear_project": {
+      "id": "332fce55-f661-402d-8c77-8e400e5377c4",
+      "name": "github.com/hacker-house-medellin",
+      "team_id": "eb8ab169-5afe-4b6f-9cab-3f2aa3e887dc",
+      "url": "https://linear.app/denman/project/githubcomhacker-house-medellin-d4043553c2b4",
+      "workspace": "denman"
+    },
+    "login": "hacker-house-medellin",
+    "mapping_id": "context:hacker-house-medellin"
+  },
+  "private_registry": {
+    "contains_non_public_inventory": false,
+    "digest": "sha256:321b570d4c0af52c72ef55c290743e5b7e941981d306fdd6ae2cfc592ca1497a",
+    "path": "owners/hacker-house-medellin.json",
+    "repository": "approved-private-registry"
+  },
+  "relationships": [
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:b4ffe3f96a638230cce8e5762230841fb1816c38a9e926ff94ea9923d81e7cca",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hacker-house-medellin-clients",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:378d4f14a1c89c28771c5a9c2f9970d2de3d3c1f7eb65b80dc38d35385c37398",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hacker-house-medellin-libs",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:991bcb1d45cca6767558c63f4d70fcca0cc3eb2afe58f70ddc7ca4a61952e654",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hacker-house-medellin-monorepo",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:ccbba83003431778323d531f945b375dc1f1bcb58734c646acea5430995f9eb4",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hacker-house-medellin.github.io",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:54fc7b95c4551ab0127e04bb4c557cce2ea57182b1be69abccc7338c8649393f",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-api",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:d3e4f640e75cbd522fae881d91f7994b23bb9e9d96efcb2aea512b2ddf8389e1",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-cli",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:78f7d9e565ce0a4aec75a7417b0a4e4df907f28d78cc33fa2f55bcbf35b17341",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-clients",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:b848463a67f4c1abe97062e145f6b96911ff54dadf6deadce4c0c2ac7fde3f04",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-dioxus-web",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:595fa445cbaeb26def969fd8b36246680f969e1888da9a54af795ab315a85e1b",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-infra",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:c0f8ba42468aba5683990baf0ef8f6be7f9c73d8dce9d6624bbd4b7b75a44e53",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-interfaces",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:96f0b8081767d63be78e381185797ad6e65a7c59c6cb3a90106f420bd6727ba9",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-leptos-web",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:46f4fb65bdad97696c1a8555544c7486893231b28e296015dfcc29c6a2c7dd9c",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-libs",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:5557ace2185217bb5055f1c3cff1a8d9f69b25260ff87f1d018802e289384a16",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-mash-web",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:619556719e0584d5dfe79c3cc9abe370f5ac5a25add46cfe74818601001771d6",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-monorepo",
+      "type": "governs"
+    },
+    {
+      "confidence": 1.0,
+      "evidence": [
+        {
+          "kind": "github-owner-membership",
+          "source": "GitHub GraphQL repository inventory"
+        }
+      ],
+      "from": "hacker-house-medellin/.github",
+      "id": "sha256:130106d42d47cc332beb2a9a7364483acdf8eb8721824dfbc79a05606d0d386f",
+      "notes": "Organization .github policy and community-health defaults govern this sibling repository.",
+      "required": true,
+      "scope": "organization",
+      "status": "declared",
+      "to": "hacker-house-medellin/hhm-sync",
+      "type": "governs"
+    },
+    {
+      "confidence": 0.95,
+      "evidence": [
+        {
+          "kind": "repository-name",
+          "value": "hacker-house-medellin.github.io"
+        }
+      ],
+      "from": "hacker-house-medellin/hacker-house-medellin.github.io",
+      "id": "sha256:c5b64deea344b6155203f790d36a27e300714c7efc712264d5d7f54e7eba4390",
+      "notes": "The conventional *.github.io repository documents the organization profile.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "hacker-house-medellin/.github",
+      "type": "documents"
+    },
+    {
+      "confidence": 0.82,
+      "evidence": [
+        {
+          "family": "hhm",
+          "kind": "paired-repository-naming",
+          "source_role": "api-server",
+          "target_role": "interfaces"
+        }
+      ],
+      "from": "hacker-house-medellin/hhm-api",
+      "id": "sha256:0e709ceaf02169d5e4353938da29956069e9518085272ad63c3ae3ed1b37b351",
+      "notes": "Conservative naming inference; confirm or override in the manual declaration file.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "hacker-house-medellin/hhm-interfaces",
+      "type": "depends_on"
+    },
+    {
+      "confidence": 0.82,
+      "evidence": [
+        {
+          "family": "hhm",
+          "kind": "paired-repository-naming",
+          "source_role": "clients",
+          "target_role": "interfaces"
+        }
+      ],
+      "from": "hacker-house-medellin/hhm-clients",
+      "id": "sha256:68e4d950badda051f4e4256d4f0344284106c6601b18bfd615b7bfa43d14ae29",
+      "notes": "Conservative naming inference; confirm or override in the manual declaration file.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "hacker-house-medellin/hhm-interfaces",
+      "type": "depends_on"
+    },
+    {
+      "confidence": 0.76,
+      "evidence": [
+        {
+          "family": "hhm",
+          "kind": "paired-repository-naming"
+        }
+      ],
+      "from": "hacker-house-medellin/hhm-infra",
+      "id": "sha256:b82e41d681718ce20eab207fa579896b10d71f197688ea3c23c9fde91343f1c8",
+      "notes": "Conservative naming inference; confirm or override in the manual declaration file.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "hacker-house-medellin/hhm-monorepo",
+      "type": "deploys"
+    },
+    {
+      "confidence": 0.82,
+      "evidence": [
+        {
+          "family": "hhm",
+          "kind": "paired-repository-naming",
+          "source_role": "sync",
+          "target_role": "interfaces"
+        }
+      ],
+      "from": "hacker-house-medellin/hhm-sync",
+      "id": "sha256:3eb4ce018fab4cf9558dc4cecf38464e338e1811078582049f076abae7fca137",
+      "notes": "Conservative naming inference; confirm or override in the manual declaration file.",
+      "required": false,
+      "scope": "organization",
+      "status": "inferred",
+      "to": "hacker-house-medellin/hhm-interfaces",
+      "type": "depends_on"
+    }
+  ],
+  "repositories": [
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/.github",
+      "github_id": "1324267271",
+      "name": ".github",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "community-health",
+        "governance",
+        "relationship-registry"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/.github",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hacker-house-medellin-clients",
+      "github_id": "1323570289",
+      "name": "hacker-house-medellin-clients",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "clients"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hacker-house-medellin-clients",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hacker-house-medellin-libs",
+      "github_id": "1323570392",
+      "name": "hacker-house-medellin-libs",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hacker-house-medellin-libs",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hacker-house-medellin-monorepo",
+      "github_id": "1323570564",
+      "name": "hacker-house-medellin-monorepo",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "monorepo"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hacker-house-medellin-monorepo",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hacker-house-medellin.github.io",
+      "github_id": "1323565795",
+      "name": "hacker-house-medellin.github.io",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "documentation-site"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hacker-house-medellin.github.io",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-api",
+      "github_id": "1323565869",
+      "name": "hhm-api",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "api-server"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-api",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-cli",
+      "github_id": "1323565915",
+      "name": "hhm-cli",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-cli",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-clients",
+      "github_id": "1323565970",
+      "name": "hhm-clients",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "clients"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-clients",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-dioxus-web",
+      "github_id": "1323566469",
+      "name": "hhm-dioxus-web",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-dioxus-web",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-infra",
+      "github_id": "1323566063",
+      "name": "hhm-infra",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "infrastructure"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-infra",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-interfaces",
+      "github_id": "1323566138",
+      "name": "hhm-interfaces",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "interfaces"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-interfaces",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-leptos-web",
+      "github_id": "1323566519",
+      "name": "hhm-leptos-web",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-leptos-web",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-libs",
+      "github_id": "1323566192",
+      "name": "hhm-libs",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-libs",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-mash-web",
+      "github_id": "1323566572",
+      "name": "hhm-mash-web",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "repository"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-mash-web",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-monorepo",
+      "github_id": "1323566324",
+      "name": "hhm-monorepo",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "monorepo"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-monorepo",
+      "visibility": "public"
+    },
+    {
+      "archived": false,
+      "default_branch": "main",
+      "fork": false,
+      "full_name": "hacker-house-medellin/hhm-sync",
+      "github_id": "1323566427",
+      "name": "hhm-sync",
+      "owner": "hacker-house-medellin",
+      "roles": [
+        "sync"
+      ],
+      "source": "github-graphql-api",
+      "url": "https://github.com/hacker-house-medellin/hhm-sync",
+      "visibility": "public"
+    }
+  ],
+  "schema_version": 1,
+  "unresolved_hints": []
+}
