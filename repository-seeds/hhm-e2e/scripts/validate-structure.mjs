@@ -5,15 +5,19 @@ const prefix = "hhm";
 const org = "hacker-house-medellin";
 const repo = "hhm-e2e";
 const requiredPaths = [
-  ".zpkg.toml", "package.json", "contracts/scenarios.json",
+  ".zpkg.toml",
+  "package.json",
+  "contracts/scenarios.json",
   "tests/browser/playwright/smoke.spec.mjs",
   "tests/browser/puppeteer/smoke.test.mjs",
   "tests/browser/selenium/smoke.test.mjs",
+  "rust-smoke/Cargo.toml",
+  "rust-smoke/src/main.rs",
 ];
 await Promise.all(requiredPaths.map((path) => access(path)));
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 if (packageJson.name !== `@${org}/${repo}`) throw new Error("package identity drift");
-for (const [name, version] of Object.entries({"@playwright/test":"1.62.0","puppeteer":"25.3.0","selenium-webdriver":"4.46.0"})) {
+for (const [name, version] of Object.entries({ "@playwright/test": "1.62.0", puppeteer: "25.3.0", "selenium-webdriver": "4.46.0" })) {
   if (packageJson.devDependencies?.[name] !== version) throw new Error(`unreviewed ${name} version`);
 }
 const manifest = readFileSync(".zpkg.toml", "utf8");
@@ -25,4 +29,12 @@ if (manifest.includes(`${org}-${repo}`)) throw new Error("long-name duplicate id
 const scenarios = JSON.parse(readFileSync("contracts/scenarios.json", "utf8"));
 if (scenarios.suite !== repo || scenarios.scenarios.length < 4) throw new Error("scenario contract drift");
 if (scenarios.scenarios.some((entry) => entry.live_credentials_required !== false)) throw new Error("offline defaults weakened");
+const cargo = readFileSync("rust-smoke/Cargo.toml", "utf8");
+if (!cargo.includes('name = "hhm-e2e-smoke"')) throw new Error("Rust smoke package identity drift");
+if (!cargo.includes('publish = false')) throw new Error("Rust smoke crate must remain unpublished");
+const rustSource = readFileSync("rust-smoke/src/main.rs", "utf8");
+for (const envName of ["HHM_MASH_URL", "HHM_LEPTOS_URL", "HHM_DIOXUS_URL", "HHM_API_URL"]) {
+  if (!rustSource.includes(envName)) throw new Error(`missing Rust smoke endpoint ${envName}`);
+}
+if (!rustSource.includes('url.set_path("/ws")')) throw new Error("missing Rust WebSocket upgrade contract");
 console.log(`validated ${org}/${repo} structure`);

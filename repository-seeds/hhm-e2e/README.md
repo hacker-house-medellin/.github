@@ -2,7 +2,7 @@
 
 Canonical end-to-end and cross-repository contract harness for **Hacker House Medellín**.
 
-This repository is intentionally offline-safe by default. Playwright, Puppeteer, and Selenium exercise the same local fixture contract. Live endpoints are opt-in through `E2E_BASE_URL` and must use isolated test tenants and ephemeral secrets.
+This repository is intentionally offline-safe by default. Playwright, Puppeteer, and Selenium exercise the same local fixture contract. The nested Rust smoke crate validates the Mash, Leptos, Dioxus, API health endpoints, and the API WebSocket upgrade. Live endpoints are opt-in and must use isolated test tenants and ephemeral secrets.
 
 ## Canonical composition
 
@@ -21,6 +21,20 @@ npx playwright install --with-deps chromium
 npm run test:playwright
 npm run test:puppeteer
 npm run test:selenium
+
+cargo fmt --manifest-path rust-smoke/Cargo.toml --all -- --check
+cargo clippy --manifest-path rust-smoke/Cargo.toml --all-targets --all-features -- -D warnings
+cargo test --manifest-path rust-smoke/Cargo.toml --all-targets --all-features
+```
+
+For live Rust smoke checks:
+
+```bash
+export HHM_MASH_URL=http://localhost:8080
+export HHM_LEPTOS_URL=http://localhost:8081
+export HHM_DIOXUS_URL=http://localhost:8082
+export HHM_API_URL=http://localhost:8090
+cargo run --manifest-path rust-smoke/Cargo.toml
 ```
 
 ## Planning
@@ -29,4 +43,4 @@ npm run test:selenium
 - Linear project: https://linear.app/denman/project/githubcomhacker-house-medellin-d4043553c2b4
 - GitHub Project: https://github.com/orgs/hacker-house-medellin/projects/1
 
-The publication helper generates a real npm lockfile before creating the repository. A Zed lock remains deferred until a real successful Zed resolver run can certify all published dependencies.
+The publication helper generates a real npm lockfile before creating the repository. A Cargo lock and Zed lock remain deferred until their real resolvers successfully certify the published dependency graphs.
