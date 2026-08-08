@@ -74,8 +74,8 @@ Both implementations should converge on:
 
 - GitHub Project: [`hacker-house-medellin-project` — Project 1](https://github.com/orgs/hacker-house-medellin/projects/1)
 - Linear project: `github.com/hacker-house-medellin`
-- Central registry: [`desktop-applications.json`](https://github.com/ORESoftware/project-registry/blob/main/registry/desktop-applications.json)
-- Toolkit strategy: [`rust-desktop-strategies.md`](https://github.com/ORESoftware/project-registry/blob/main/docs/rust-desktop-strategies.md)
+- Central portfolio registry: tracked through the approved private registry using an opaque internal locator; do not expose a private repository URL in this public repository.
+- Toolkit strategy: this public document is the Hacker House Medellín policy boundary; implementation repositories must carry their own `docs/DESKTOP_TOOLKIT.md`.
 - Portfolio rollout: [`DEN-2469`](https://linear.app/denman/issue/DEN-2469/roll-out-paired-rust-flutter-desktop-repositories-across-the-portfolio)
 
-Repository creation, toolkit/frontend changes, deep-link changes, renames, transfers, archival, or platform-status changes must update this document, Linear, the central registry/strategy, and both companion repositories together.
+Repository creation, toolkit/frontend changes, deep-link changes, renames, transfers, archival, or platform-status changes must update this document, Linear, the approved private registry, and both companion repositories together.
