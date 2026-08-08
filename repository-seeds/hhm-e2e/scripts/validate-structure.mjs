@@ -13,7 +13,7 @@ const requiredPaths = [
 await Promise.all(requiredPaths.map((path) => access(path)));
 const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
 if (packageJson.name !== `@${org}/${repo}`) throw new Error("package identity drift");
-for (const [name, version] of Object.entries({"@playwright/test":"1.62.1","puppeteer":"25.5.0","selenium-webdriver":"4.46.0"})) {
+for (const [name, version] of Object.entries({"@playwright/test":"1.62.0","puppeteer":"25.3.0","selenium-webdriver":"4.46.0"})) {
   if (packageJson.devDependencies?.[name] !== version) throw new Error(`unreviewed ${name} version`);
 }
 const manifest = readFileSync(".zpkg.toml", "utf8");
