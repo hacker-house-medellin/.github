@@ -86,10 +86,7 @@ async fn check_websocket(api_base: &str) -> Result<()> {
         .send(Message::Text(r#"{"type":"ping"}"#.into()))
         .await
         .context("WebSocket ping send failed")?;
-    stream
-        .close(None)
-        .await
-        .context("WebSocket close failed")?;
+    stream.close(None).await.context("WebSocket close failed")?;
     println!("ok: API WebSocket upgrade ({url})");
     Ok(())
 }
