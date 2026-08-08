@@ -16,8 +16,8 @@
     "test:selenium": "node --test tests/browser/selenium/*.test.mjs"
   },
   "devDependencies": {
-    "@playwright/test": "1.62.1",
-    "puppeteer": "25.5.0",
+    "@playwright/test": "1.62.0",
+    "puppeteer": "25.3.0",
     "selenium-webdriver": "4.46.0"
   }
 }
