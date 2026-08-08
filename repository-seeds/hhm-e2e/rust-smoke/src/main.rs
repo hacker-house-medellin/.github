@@ -100,7 +100,11 @@ async fn check_websocket(api_base: &str) -> Result<()> {
         .context("WebSocket connect timeout")??;
 
     if response.status().as_u16() != 101 {
-        bail!("WebSocket upgrade returned {} from {}", response.status(), url);
+        bail!(
+            "WebSocket upgrade returned {} from {}",
+            response.status(),
+            url
+        );
     }
 
     stream
