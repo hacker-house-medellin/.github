@@ -1,0 +1,39 @@
+name: Validate HHM continuation evidence
+
+on:
+  pull_request:
+    paths:
+      - coordination/continuations/**
+      - .github/workflows/validate-hhm-continuation.yml
+  push:
+    branches: [main]
+    paths:
+      - coordination/continuations/**
+      - .github/workflows/validate-hhm-continuation.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 22.18.0
+      - name: Validate evidence packet
+        run: node coordination/continuations/2026-08-08/hacker-house-medellin-continued/validate.mjs
+      - name: Validate inactive relative-submodule handoff
+        run: coordination/continuations/2026-08-08/hacker-house-medellin-continued/proposed-hhm-monorepo/scripts/check-relative-submodule.sh
+      - name: Validate shell syntax
+        run: |
+          bash -n coordination/continuations/2026-08-08/hacker-house-medellin-continued/proposed-hhm-monorepo/scripts/check-relative-submodule.sh

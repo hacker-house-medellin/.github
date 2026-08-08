@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "gitlinks": [
+    {
+      "path": "apps/hhm-e2e",
+      "relative_url": "../hhm-e2e.git",
+      "attachment_only_sha": "9ab38530846bc0d837dd0a5cbe603ef8c3c97588",
+      "activation_state": "blocked-until-target-exact-head-is-green"
+    }
+  ]
+}
