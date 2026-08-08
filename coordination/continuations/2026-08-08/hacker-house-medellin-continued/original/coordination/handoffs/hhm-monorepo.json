@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repository": "hhm-monorepo",
+  "head": "83032a7251e18c18dd5086a3786468c450dfbfc8",
+  "lease_prefix": "hhm/hhm-monorepo",
+  "dependencies": [],
+  "test_org": "hacker-house-medellin-test",
+  "production_org": "hacker-house-medellin",
+  "state": "ready-for-test-org",
+  "claim": null,
+  "handoff_notes": [],
+  "refreshed_at": "2026-08-08T18:18:19.466083+00:00"
+}

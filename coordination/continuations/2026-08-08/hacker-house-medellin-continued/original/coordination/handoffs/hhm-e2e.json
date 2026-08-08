@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "repository": "hhm-e2e",
+  "head": "9ab38530846bc0d837dd0a5cbe603ef8c3c97588",
+  "lease_prefix": "hhm/hhm-e2e",
+  "dependencies": [],
+  "test_org": "hacker-house-medellin-test",
+  "production_org": "hacker-house-medellin",
+  "state": "ready-for-test-org",
+  "claim": null,
+  "handoff_notes": [],
+  "refreshed_at": "2026-08-08T18:18:19.466083+00:00"
+}

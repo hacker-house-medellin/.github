@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "repositories": [
+    {
+      "name": "hhm-e2e",
+      "path": "apps/hhm-e2e",
+      "url": "../hhm-e2e.git"
+    }
+  ]
+}
