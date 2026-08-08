@@ -8,6 +8,10 @@ This repository is intentionally offline-safe by default. Playwright, Puppeteer,
 
 Zed materializes `hhm-clients`, `hhm-interfaces`, `hhm-libs`, and `hhm-cli` under `.vendor/.zed`. Do not model those same repositories as gitlinks, and do not fabricate `.zpkg.lock`; create the lock only from a successful resolver run.
 
+## Browser dependency policy
+
+The browser libraries are exact-pinned in `package.json` and mirrored by `scripts/validate-structure.mjs`. Update both files together, verify that each version is published, and let the real npm resolver generate `package-lock.json`; never hand-author a lockfile.
+
 ## Commands
 
 ```bash
