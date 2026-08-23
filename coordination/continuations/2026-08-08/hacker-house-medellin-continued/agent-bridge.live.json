@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-08-08",
+  "program": "hacker-house-medellin",
+  "test_org": "hacker-house-medellin-test",
+  "production_org": "hacker-house-medellin",
+  "source_archive_sha256": "93f08a123f38ffdc7a99abee809ccc8348c00442868c14edb79f8bbd669a443b",
+  "review_branch": "agent/hhm-continued-rust-smoke",
+  "live_observations": {
+    "test_org_connected": true,
+    "test_org_repository_count": 0,
+    "production_hhm_e2e_exists": false,
+    "production_hhm_monorepo_exists": true,
+    "connector_can_write_existing_repositories": true,
+    "connector_can_create_organization_repositories": false
+  },
+  "repositories": [
+    {
+      "name": "hhm-e2e",
+      "attachment_head": "9ab38530846bc0d837dd0a5cbe603ef8c3c97588",
+      "canonical_seed": "hacker-house-medellin/.github:repository-seeds/hhm-e2e",
+      "state": "in-review"
+    },
+    {
+      "name": "hhm-monorepo",
+      "attachment_head": "83032a7251e18c18dd5086a3786468c450dfbfc8",
+      "production_history_preserved": true,
+      "state": "blocked-on-test-repository"
+    }
+  ],
+  "tasks": [
+    {
+      "key": "hhm/review/canonical-e2e-seed",
+      "status": "in-review",
+      "depends_on": []
+    },
+    {
+      "key": "hhm/bootstrap/test-org/hhm-e2e",
+      "status": "blocked",
+      "depends_on": ["hhm/review/canonical-e2e-seed"],
+      "blocker": "approved organization repository-creation identity"
+    },
+    {
+      "key": "hhm/ci/exact-head",
+      "status": "blocked",
+      "depends_on": ["hhm/bootstrap/test-org/hhm-e2e"]
+    },
+    {
+      "key": "hhm/monorepo/test-gitlink",
+      "status": "blocked",
+      "depends_on": ["hhm/ci/exact-head"]
+    },
+    {
+      "key": "hhm/promote/production",
+      "status": "blocked",
+      "depends_on": ["hhm/monorepo/test-gitlink"]
+    }
+  ]
+}

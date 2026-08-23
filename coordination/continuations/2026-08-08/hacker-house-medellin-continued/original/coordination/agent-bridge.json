@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-08-08T18:11:19.543557+00:00",
+  "program": "hacker-house-medellin",
+  "test_org": "hacker-house-medellin-test",
+  "production_org": "hacker-house-medellin",
+  "source_of_truth": {
+    "planning": "Linear",
+    "code": "GitHub",
+    "handoffs": "GitHub issues and this manifest"
+  },
+  "lease_namespace": "hhm",
+  "repositories": [
+    {
+      "name": "hhm-e2e",
+      "head": "9ab38530846bc0d837dd0a5cbe603ef8c3c97588",
+      "dependencies": [],
+      "lease_prefix": "hhm/hhm-e2e"
+    },
+    {
+      "name": "hhm-monorepo",
+      "head": "83032a7251e18c18dd5086a3786468c450dfbfc8",
+      "dependencies": [],
+      "lease_prefix": "hhm/hhm-monorepo"
+    }
+  ],
+  "tasks": [
+    {
+      "key": "hhm/bootstrap/test-org",
+      "status": "ready",
+      "depends_on": [],
+      "claim": null
+    },
+    {
+      "key": "hhm/ci/all-repos",
+      "status": "ready",
+      "depends_on": [
+        "hhm/bootstrap/test-org"
+      ],
+      "claim": null
+    },
+    {
+      "key": "hhm/e2e/test-environment",
+      "status": "blocked",
+      "depends_on": [
+        "hhm/ci/all-repos"
+      ],
+      "claim": null
+    },
+    {
+      "key": "hhm/promote/production",
+      "status": "blocked",
+      "depends_on": [
+        "hhm/e2e/test-environment"
+      ],
+      "claim": null
+    }
+  ],
+  "bridge_discovery": {
+    "generated_at": "2026-08-08T18:17:19.681393+00:00",
+    "authenticated_owner": null,
+    "eligible_candidates": [],
+    "selected_mode": "portable-manifest-plus-github-linear",
+    "selection_reason": "No external bridge is invoked unless it is owned by an accessible user/org and exposes a documented, compatible claim/handoff contract."
+  },
+  "refreshed_at": "2026-08-08T18:18:19.466083+00:00"
+}

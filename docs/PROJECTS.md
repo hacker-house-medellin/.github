@@ -28,3 +28,12 @@ Documentation branches must be reviewed through pull requests and merged after c
 - **Composition:** committed canonical gitlinks are allowed as source transport and must be adopted with `zed overtake --git-submodules`; duplicate package identities and long-name aliases are prohibited.
 
 GitHub Project #1 tracks execution. The Linear project tracks priority, ownership, dependencies, milestones, and delivery status. Repository, pull-request, CI, release, and runtime evidence remains in GitHub.
+
+
+## Delivery record — `hhm-mcp-server.rs` (2026-08-07)
+
+- **Canonical repository published:** https://github.com/hacker-house-medellin/hhm-mcp-server.rs
+- **Initial commit (seed bootstrap via `publish.sh`):** `aeb2e7f0190d8f24f1a42ea0a0355a8ee4a66ca1`
+- **CI-green commit:** `9e8850ff7b48b41f46ff62af31ca4d423e5aa7d5` — formatting, Clippy, tests, and Zed manifest checks all passing
+- **Delivery issue:** [hacker-house-medellin/.github#4](https://github.com/hacker-house-medellin/.github/issues/4), added to organization GitHub Project #1
+- **Outstanding:** `.zpkg.lock` generation awaits a real successful Zed resolver run (DEN-2293)
