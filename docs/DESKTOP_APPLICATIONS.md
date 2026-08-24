@@ -1,33 +1,34 @@
 # Hacker House Medellín desktop applications
 
-Verified **2026-08-06**.
+Verified **2026-08-24**.
 
 ## Required pair
 
-- Rust: [`hacker-house-medellin/hhm-desktop.rs`](https://github.com/hacker-house-medellin/hhm-desktop.rs) — **planned**, not yet verified as published.
-- Flutter: [`hacker-house-medellin/hhm-flutter`](https://github.com/hacker-house-medellin/hhm-flutter) — **planned**, not yet verified as published.
+- Rust: [`hacker-house-medellin/hhm-desktop-app.rs`](https://github.com/hacker-house-medellin/hhm-desktop-app.rs) — public companion repository.
+- Flutter: [`hacker-house-medellin/hhm-flutter`](https://github.com/hacker-house-medellin/hhm-flutter) — public mobile and desktop application repository.
 
 Both are first-class product applications. Do not mark either implementation live until the remote, native build, packaging, tests, and supported-platform matrix are verified.
 
-## Rust desktop kit: Tauri 2 without React
+## Rust desktop kit: Slint, winit, and a stable FFI boundary
 
-The Rust application uses **Tauri 2**.
+The Rust application uses **Slint over its winit backend**, not Qt. Product state and privileged operations remain in a renderer-independent Rust core.
 
-- React, JSX, React-derived stacks, Vue, and Svelte are prohibited.
-- Use vanilla HTML, CSS, and TypeScript.
-- HTMX is allowed for authenticated server-driven fragments when it reduces client complexity.
-- Rust/Tauri commands own local persistence, secure storage, notifications, files, printing, deep-link validation, and privileged operations.
+- The core exposes an explicitly versioned C ABI through `cdylib` and `staticlib` artifacts so Dart FFI and another reviewed UI skin can consume the same behavior.
+- The ABI uses opaque handles, explicit ownership and string-release functions, bounded UTF-8 inputs, documented thread rules, and panic containment. Rust unwinding and borrowed Rust references never cross the boundary.
+- Slint owns presentation only. Rust services own local persistence, secure storage, notifications, files, printing, deep-link validation, authenticated API calls, authorization checks, and other privileged operations.
+- Shared Auth and Supabase tokens remain in OS-protected storage and are never passed into markup, logs, telemetry attributes, QR payloads, or Bluetooth advertisements.
+- A second UI skin must call the same versioned FFI contract and conformance fixtures; it must not fork product authorization or persistence behavior.
 - Do not introduce an unauthenticated loopback HTTP service.
 
 This strategy fits membership applications, residents, rooms, events, calendars, payments, community messaging, organizer workflows, and local printing while keeping privileged behavior in Rust.
 
-The future Rust repository must contain `docs/DESKTOP_TOOLKIT.md` documenting the Tauri major-version policy, capability/CSP rules, no-React frontend policy, privilege boundary, deep links, packaging, platform tests, and Flutter companion.
+The Rust repository must contain `docs/DESKTOP_TOOLKIT.md` documenting the Slint and winit version policy, FFI compatibility and ownership rules, privilege boundary, deep links, packaging, platform tests, and Flutter companion.
 
 ## Parallel Rust and Flutter development
 
 The Rust and Flutter applications are developed side-by-side to compare desktop UX, security, local integration, accessibility, Flutter mobile reuse, developer velocity, packaging, and long-term maintenance using the same product features.
 
-Every desktop-facing feature must inspect both repositories, share acceptance criteria and fixtures, and normally update both. A one-sided change requires a documented no-change rationale and parity gap. The future `hhm-desktop.rs` README, `AGENTS.md`, pull-request template, and `docs/DESKTOP_TOOLKIT.md` must state this rule prominently.
+Every desktop-facing feature must inspect both repositories, share acceptance criteria and fixtures, and normally update both. A one-sided change requires a documented no-change rationale and parity gap. The `hhm-desktop-app.rs` README, `AGENTS.md`, pull-request template, and `docs/DESKTOP_TOOLKIT.md` must state this rule prominently.
 
 ## HTTPS-first deep links
 
