@@ -10,6 +10,10 @@ hacker-house-medellin maintains community, event, project, learning, and operati
 
 Each active repository must document purpose, ownership, maturity, supported environments, development and test commands, authoritative interfaces and content, release and rollback procedures, compatibility policy, and GitHub Project/Linear links. Community systems should also document organizer responsibility, participant privacy and consent, venue and event provenance, moderation, accessibility, localization, safeguarding, retention, incident escalation, and operational limitations.
 
+## House operations
+
+Management may offer voluntary, written workshift agreements that exchange clearly scoped cooking, cleaning, tidying, organizing, or decorating work for a defined rent discount. Selection evidence, terms, safety boundaries, tenancy and employment protections, private records, and review requirements are governed by [the resident workshift rent-discount policy](RESIDENT_WORKSHIFT_RENT_DISCOUNTS.md). Applicant names, references, schedules, performance records, and housing records must not be placed in public planning or source-control systems.
+
 ## Change workflow
 
 1. Anchor work in an issue, Linear item, or documented community objective.

@@ -37,6 +37,18 @@ SECRET_PATTERNS = [
     re.compile(r'(?i)authorization:\\s*bearer\\s+[A-Za-z0-9._-]{16,}'),
 ]
 
+def contains_only_reusable_workflow_jobs(text: str) -> bool:
+    """Return true when every job delegates through a job-level ``uses`` key.
+
+    GitHub does not support ``timeout-minutes`` on jobs that call reusable
+    workflows. The called workflow owns that execution limit instead.
+    """
+    has_reusable_job = re.search(r'(?m)^ {4}uses:\s*[^\s#]+', text) is not None
+    has_executable_job = re.search(
+        r'(?m)^ {4}(?:runs-on|container|services|steps):', text
+    ) is not None
+    return has_reusable_job and not has_executable_job
+
 def fail(message: str) -> None:
     print(f'ERROR: {message}', file=sys.stderr)
     raise SystemExit(1)
@@ -71,7 +83,7 @@ for path in workflow_paths:
     text = path.read_text(encoding='utf-8')
     if 'permissions:' not in text:
         fail(f'workflow lacks explicit permissions: {path.relative_to(ROOT)}')
-    if 'timeout-minutes:' not in text:
+    if 'timeout-minutes:' not in text and not contains_only_reusable_workflow_jobs(text):
         fail(f'workflow lacks timeout: {path.relative_to(ROOT)}')
     for number, line in enumerate(text.splitlines(), 1):
         match = re.search(r'^\\s*(?:-\\s+)?uses:\\s*([^\\s#]+)', line)
