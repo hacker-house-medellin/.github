@@ -1,41 +1,78 @@
-## Purpose
+<!--
+Canonical organization pull-request template. The root and .github mirrors must remain byte-identical;
+scripts/validate_baseline.py enforces that invariant.
+-->
+<!-- ore-org-baseline:begin -->
+## Summary and ownership
 
-Describe the problem, intended behavior, and why this repository owns the change.
+Describe the problem, intended behavior, user or operational impact, repositories/components affected, and why this repository owns the change. Mark non-applicable checks as `N/A` with a reason.
 
-## Review path
+## Planning and immutable dependencies
 
-- [ ] All commits are on a non-default branch and this pull request is the only proposed path into the default branch.
-- [ ] No generated tool, bot, migration runner, or deployment process writes directly to `main`, `master`, or another protected default branch.
-- [ ] The change is small enough to review, or its staged rollout and follow-up pull requests are identified.
+- Linear project or issue: [github.com/hacker-house-medellin](https://linear.app/denman/project/githubcomhacker-house-medellin-d4043553c2b4)
+- Related GitHub issues or pull requests:
+- Related repositories, releases, schemas, or external contracts:
+- Immutable dependency/artifact revisions:
 
-## Scope and boundaries
+## Change control and repository boundaries
 
+- [ ] All commits are on a topic branch and this pull request is the only proposed path into the protected target branch.
+- [ ] No bot, generator, migration runner, or deployment process writes directly to `main`, `dev`, or another protected branch.
 - [ ] The change is focused and does not silently cross repository ownership boundaries.
+- [ ] Shared functionality is imported from its owning repository rather than copied into a local substitute.
+- [ ] Cross-repository dependencies use an immutable commit, lockfile, digest, or reviewed Zed package; no floating branch or mutable image tag is promoted.
 - [ ] No `*-infra` repository is introduced as a Git submodule under `*-monorepo/apps`.
-- [ ] Public contracts, compatibility, rollback, telemetry, and failure behavior are documented.
-- [ ] Shared functionality is imported from its owning repository rather than copied into a new local implementation.
 
-## Contracts, SQL, and migrations
+## Contracts, generated artifacts, and compatibility
 
-- [ ] If SQL changes, declarations use the registered logical namespace `<organization>.<domain>` and stable `<domain>_` object prefixes where a shared PostgreSQL schema such as `public` is required.
-- [ ] Domain SQL may remain in the owning organization, but identity, ordering, checksums, drift detection, and promotion are registered through `declarative-migrations`.
-- [ ] JSON Schema, generated language interfaces, ORM models, fixtures, and migration declarations were updated and checked deterministically together.
-- [ ] Destructive changes include compatibility, backfill, rollback, tenant isolation, and row-level-security evidence.
+- [ ] TypeSpec and independently authored JSON Schema remain peer authorities; neither overwrites or outranks the other.
+- [ ] TypeSpec-generated JSON Schema B is comparison evidence only and was checked against authored Schema A structurally and behaviorally.
+- [ ] Generated interfaces, SQL/ORM projections, fixtures, clients, and documentation were regenerated from reviewed sources and were not hand-edited.
+- [ ] Public API/RPC routes, request/response shapes, headers, query parameters, status codes, and compatibility implications were checked where applicable.
+- [ ] Breaking changes include migration, staged rollout, rollback or roll-forward, and consumer-update evidence.
 
-## Infrastructure and end-to-end coverage
+## SQL, persistence, synchronization, and money
 
-- [ ] Kubernetes application manifests compose through `oresoftware/k8s-cluster` and reuse `oresoftware/k8s-libs-and-shared-defs`; application repositories do not become a second cluster control plane.
-- [ ] Workload identity, restricted Pod Security, default-deny networking, explicit egress, probes, resources, secret handling, and immutable image/dependency references were considered.
-- [ ] Destructive and cross-runtime tests run in the corresponding `*-test` organization or an isolated e2e environment, with teardown evidence.
-- [ ] Zed lifecycle hooks cover the relevant pre-build, pre-test, and pre-publish checks without bypassing local language-native validation.
+- [ ] No SQL changes, or every declaration has a stable organization/domain namespace and explicit owning repository.
+- [ ] Domain SQL may remain local, but identity, ordering, checksums, drift detection, and promotion are registered through `declarative-migrations`.
+- [ ] Application startup validates schema compatibility and never applies production DDL.
+- [ ] Diesel, SeaORM, generated SQL, live-catalog evidence, migrations, and fixtures are deterministic and in parity where applicable.
+- [ ] Tenant isolation, RLS/authorization, idempotency, transaction/lock or fencing behavior, concurrent-race tests, and outbox delivery are covered.
+- [ ] Browser/local state is treated as a resumable cache rather than legal, payment, rent-ledger, or server-authority evidence.
+- [ ] Money uses integer minor units; Stripe or other provider secrets, raw card/bank data, and unverified webhook effects are excluded.
 
-## Validation
+## Runtime, infrastructure, and security
 
-List formatters, linters, tests, builds, schema/codegen checks, migration validation, security checks, and manual verification performed. Include exact commands and explain any check that could not run.
+- [ ] Rust servers compose ordered `ores-middleware`, `shared-auth`, route-specific `ores-rate-limit`, `ores-redis-lru-cache`, and `ores-otel` without local bypasses.
+- [ ] Cross-layer state uses `opto-sync` where justified; secrets use `ores-sops` and only encrypted `env/enc` files are tracked.
+- [ ] Public/admin `ores-chat` surfaces, `ores-wasm-loaders`, service workers, and background execution preserve tenant, privacy, and authorization boundaries where used.
+- [ ] Application manifests remain app-owned; cluster composition uses `ORESoftware/k8s-cluster` and shared components use `ORESoftware/k8s-libs-and-shared-defs`.
+- [ ] Workloads use least privilege, workload identity, restricted pod security, default-deny networking, explicit egress, probes, non-root execution, immutable images, and bounded resources.
+- [ ] Authentication and authorization fail closed; admin/customer realms and databases remain isolated; sensitive actions are auditable.
+- [ ] Credentials, private keys, personal data, legal records, user content, and high-cardinality identifiers are excluded from source, fixtures, logs, traces, and build artifacts.
 
-## Safety
+## Validation and independent evidence
 
-- [ ] No credentials, customer data, private-repository inventory, or sensitive telemetry is included.
-- [ ] Conflicts were resolved semantically using both sides and relevant history.
-- [ ] Destructive Git recovery, force pushes to protected branches, and history rewrites were not used.
-- [ ] Logs and traces exclude secrets and user content by default and preserve tenant boundaries.
+List exact commands, environments, immutable heads/artifacts, and results. Include format, lint, build, unit, integration, adversarial, contract/parity, migration, security, and end-to-end checks as applicable.
+
+- [ ] Relevant `*-test` organization or isolated e2e suites ran against exact recorded revisions, including negative/failure modes and teardown or recovery evidence.
+- [ ] Zed lifecycle hooks cover the relevant pre-build, pre-test, and pre-publish checks without replacing language-native validation.
+- [ ] External Actions are pinned to full commit SHAs or container digests, checkout credentials do not persist, workflow permissions are least-privilege, and local jobs have bounded timeouts.
+- [ ] Required reviews, branch protections, environment approvals, and security/compliance gates remain enabled and were not bypassed.
+
+## Conflict-resolution record
+
+- [ ] Remote state and relevant related repositories were inspected before editing and again before pushing.
+- [ ] Concurrent work was preserved; no stash, rebase, reset, force push, destructive cleanup, or history rewrite was used.
+- [ ] Conflicts, if any, were resolved semantically using the merge base, both complete sides, relevant history, tests, contracts, linked work, and related repositories.
+- [ ] The complete tree was scanned for unresolved conflict markers; no side was accepted wholesale merely as `ours`, `theirs`, `current`, or `incoming`.
+
+## Release, residual risk, and rollback
+
+- Deployment or migration impact:
+- Immutable release/image/artifact identity:
+- `*-infra` desired-state change:
+- Rollback or roll-forward procedure:
+- Known limitations, deferred repositories, and follow-up work:
+- Evidence-based merge confidence and remaining uncertainty:
+<!-- ore-org-baseline:end -->
