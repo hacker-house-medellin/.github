@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/hacker-house-medellin/.github/blob/main/policy/ores-fleet-hardening.v1.schema.json",
+  "title": "Hacker House Medellín fleet-hardening policy binding",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["$schema", "api_version", "kind", "metadata", "spec"],
+  "properties": {
+    "$schema": {
+      "const": "./ores-fleet-hardening.v1.schema.json"
+    },
+    "api_version": {
+      "const": "ores.dev/fleet-hardening-binding/v1"
+    },
+    "kind": {
+      "const": "OrganizationHardeningPolicyBinding"
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["organization", "environment", "sql_namespace"],
+      "properties": {
+        "organization": {
+          "const": "hacker-house-medellin"
+        },
+        "environment": {
+          "const": "production"
+        },
+        "sql_namespace": {
+          "const": "hacker_house_medellin"
+        }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "policy",
+        "sql",
+        "kubernetes",
+        "repository_policy_path",
+        "fail_closed"
+      ],
+      "properties": {
+        "source": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["repository", "commit", "path", "sha256"],
+          "properties": {
+            "repository": {
+              "const": "ORESoftware/ores-gh-bots"
+            },
+            "commit": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{40}$"
+            },
+            "path": {
+              "const": "config/hardening-fleet.v1.json"
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          }
+        },
+        "policy": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["api_version", "name", "version"],
+          "properties": {
+            "api_version": {
+              "const": "ores.dev/fleet-hardening/v1"
+            },
+            "name": {
+              "const": "ores-fleet-hardening"
+            },
+            "version": {
+              "const": "1.0.0"
+            }
+          }
+        },
+        "sql": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "authority",
+            "namespace",
+            "namespace_pattern",
+            "registry",
+            "diesel_model",
+            "seaorm_model"
+          ],
+          "properties": {
+            "authority": {
+              "const": "organization-local-with-central-mirror"
+            },
+            "namespace": {
+              "const": "hacker_house_medellin"
+            },
+            "namespace_pattern": {
+              "const": "^[a-z][a-z0-9_]{0,62}$"
+            },
+            "registry": {
+              "const": "declarative-migrations/declarative-postgres-migrate.rs"
+            },
+            "diesel_model": {
+              "const": "code-first"
+            },
+            "seaorm_model": {
+              "const": "database-first"
+            }
+          }
+        },
+        "kubernetes": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["cluster", "libraries", "deployment_model"],
+          "properties": {
+            "cluster": {
+              "const": "ORESoftware/k8s-cluster"
+            },
+            "libraries": {
+              "const": "ORESoftware/k8s-libs-and-shared-defs"
+            },
+            "deployment_model": {
+              "const": "gitops"
+            }
+          }
+        },
+        "repository_policy_path": {
+          "const": ".ores/repository-hardening.v1.json"
+        },
+        "fail_closed": {
+          "const": true
+        }
+      }
+    }
+  }
+}
