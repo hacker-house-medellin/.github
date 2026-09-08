@@ -46,7 +46,14 @@
         "source": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["repository", "commit", "path", "sha256"],
+          "required": [
+            "repository",
+            "commit",
+            "policy_path",
+            "policy_sha256",
+            "schema_path",
+            "schema_sha256"
+          ],
           "properties": {
             "repository": {
               "const": "ORESoftware/ores-gh-bots"
@@ -55,10 +62,17 @@
               "type": "string",
               "pattern": "^[0-9a-f]{40}$"
             },
-            "path": {
+            "policy_path": {
               "const": "config/hardening-fleet.v1.json"
             },
-            "sha256": {
+            "policy_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "schema_path": {
+              "const": "config/hardening-fleet.v1.schema.json"
+            },
+            "schema_sha256": {
               "type": "string",
               "pattern": "^[0-9a-f]{64}$"
             }
