@@ -11,8 +11,10 @@
     "source": {
       "repository": "ORESoftware/ores-gh-bots",
       "commit": "5f62a206e79ca8d2450f50d43aa71e78d97b45f3",
-      "path": "config/hardening-fleet.v1.json",
-      "sha256": "8691a8b54d10b7bff2483775cc6b4a654a085fa93bf28a0e700760bd40a4b948"
+      "policy_path": "config/hardening-fleet.v1.json",
+      "policy_sha256": "8691a8b54d10b7bff2483775cc6b4a654a085fa93bf28a0e700760bd40a4b948",
+      "schema_path": "config/hardening-fleet.v1.schema.json",
+      "schema_sha256": "e8628821f1b4f4c5e84667b29898db9fed80e3d21ebc9e6a3d8e2ee33a835040"
     },
     "policy": {
       "api_version": "ores.dev/fleet-hardening/v1",
