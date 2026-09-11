@@ -1,0 +1,40 @@
+{
+  "$schema": "./ores-fleet-hardening.v1.schema.json",
+  "api_version": "ores.dev/fleet-hardening-binding/v1",
+  "kind": "OrganizationHardeningPolicyBinding",
+  "metadata": {
+    "organization": "hacker-house-medellin",
+    "environment": "production",
+    "sql_namespace": "hacker_house_medellin"
+  },
+  "spec": {
+    "source": {
+      "repository": "ORESoftware/ores-gh-bots",
+      "commit": "5f62a206e79ca8d2450f50d43aa71e78d97b45f3",
+      "policy_path": "config/hardening-fleet.v1.json",
+      "policy_sha256": "8691a8b54d10b7bff2483775cc6b4a654a085fa93bf28a0e700760bd40a4b948",
+      "schema_path": "config/hardening-fleet.v1.schema.json",
+      "schema_sha256": "e8628821f1b4f4c5e84667b29898db9fed80e3d21ebc9e6a3d8e2ee33a835040"
+    },
+    "policy": {
+      "api_version": "ores.dev/fleet-hardening/v1",
+      "name": "ores-fleet-hardening",
+      "version": "1.0.0"
+    },
+    "sql": {
+      "authority": "organization-local-with-central-mirror",
+      "namespace": "hacker_house_medellin",
+      "namespace_pattern": "^[a-z][a-z0-9_]{0,62}$",
+      "registry": "declarative-migrations/declarative-postgres-migrate.rs",
+      "diesel_model": "code-first",
+      "seaorm_model": "database-first"
+    },
+    "kubernetes": {
+      "cluster": "ORESoftware/k8s-cluster",
+      "libraries": "ORESoftware/k8s-libs-and-shared-defs",
+      "deployment_model": "gitops"
+    },
+    "repository_policy_path": ".ores/repository-hardening.v1.json",
+    "fail_closed": true
+  }
+}
