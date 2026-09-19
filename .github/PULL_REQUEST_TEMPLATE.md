@@ -76,3 +76,11 @@ List exact commands, environments, immutable heads/artifacts, and results. Inclu
 - Known limitations, deferred repositories, and follow-up work:
 - Evidence-based merge confidence and remaining uncertainty:
 <!-- ore-org-baseline:end -->
+
+## Salvage check
+
+If this PR supersedes or replaces an older one, say which, and name at least one
+concrete thing carried forward from it (a test, a fixture, an error message, a
+pin, a doc paragraph). See [`docs/pr-salvage-policy.md`](../docs/pr-salvage-policy.md).
+
+- [ ] Supersedes nothing, **or** the salvaged item is named above.
