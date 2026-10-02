@@ -1,4 +1,13 @@
+# Repository-local temporary data and authorized Git worktrees
 tmp
 temp
 tmp/worktrees
 temp/worktrees
+
+# Trailing-slash duplicates of the two scratch roots above, carried in from
+# chore/DEN-3956-tmp-temp-ignores. They are redundant: a pattern without a
+# trailing slash already matches directories, so tmp and temp above decide
+# every one of these paths. Kept because the branch meant them, not because
+# AGENTS.md asks for this form - it does not.
+tmp/
+temp/
