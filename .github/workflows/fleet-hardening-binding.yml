@@ -1,0 +1,46 @@
+name: fleet-hardening-binding
+
+on:
+  pull_request:
+    paths:
+      - "policy/ores-fleet-hardening.v1.json"
+      - "policy/ores-fleet-hardening.v1.schema.json"
+      - "scripts/validate_fleet_hardening_binding.py"
+      - "tests/test_fleet_hardening_binding.py"
+      - ".github/workflows/fleet-hardening-binding.yml"
+  push:
+    branches: [main]
+    paths:
+      - "policy/ores-fleet-hardening.v1.json"
+      - "policy/ores-fleet-hardening.v1.schema.json"
+      - "scripts/validate_fleet_hardening_binding.py"
+      - "tests/test_fleet_hardening_binding.py"
+      - ".github/workflows/fleet-hardening-binding.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out organization policy binding
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+      - name: Check out exact canonical policy source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: ORESoftware/ores-gh-bots
+          ref: 5f62a206e79ca8d2450f50d43aa71e78d97b45f3
+          path: .policy-source
+          persist-credentials: false
+      - name: Validate JSON syntax without rewriting either document
+        run: |
+          python3 -m json.tool policy/ores-fleet-hardening.v1.json >/dev/null
+          python3 -m json.tool policy/ores-fleet-hardening.v1.schema.json >/dev/null
+      - name: Run binding failure-mode tests
+        run: python3 -m unittest discover -s tests -p 'test_fleet_hardening_binding.py'
+      - name: Verify exact source revision, complete digests, and semantic projection
+        run: python3 scripts/validate_fleet_hardening_binding.py --source-root .policy-source
