@@ -1,0 +1,51 @@
+name: rust-first-policy
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: rust-first-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust-policy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - name: Check out exact tested SHA
+        shell: bash
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: test "$(git rev-parse HEAD)" = "$EXPECTED_SHA"
+      - name: Validate Rust formatting
+        run: cargo fmt --manifest-path tools/rust-first-policy/Cargo.toml --all -- --check
+      - name: Run Rust policy tests
+        run: cargo test --manifest-path tools/rust-first-policy/Cargo.toml --all-targets
+      - name: Rust clippy
+        run: cargo clippy --manifest-path tools/rust-first-policy/Cargo.toml --all-targets -- -D warnings
+      - name: Compile and test reusable Rust Action-pin checker
+        shell: bash
+        run: |
+          set -euo pipefail
+          start="$(grep -nF 'cat > "$RUNNER_TEMP/validate-action-pins.rs" <<' .github/workflows/reusable-policy.yml | cut -d: -f1)"
+          test -n "$start"
+          tail -n "+$((start+1))" .github/workflows/reusable-policy.yml \
+            | sed -n '/^          RUST$/q;p' \
+            | sed 's/^          //' > "$RUNNER_TEMP/reusable-action-pins.rs"
+          test -s "$RUNNER_TEMP/reusable-action-pins.rs"
+          rustc --edition=2021 --test "$RUNNER_TEMP/reusable-action-pins.rs" -o "$RUNNER_TEMP/reusable-action-pins-tests"
+          "$RUNNER_TEMP/reusable-action-pins-tests"
+          rustc --edition=2021 "$RUNNER_TEMP/reusable-action-pins.rs" -o "$RUNNER_TEMP/reusable-action-pins"
+          "$RUNNER_TEMP/reusable-action-pins" .github/workflows
+      - name: Fail closed on new Python automation
+        run: cargo run --quiet --manifest-path tools/rust-first-policy/Cargo.toml -- .
