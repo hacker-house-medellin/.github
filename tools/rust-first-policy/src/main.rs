@@ -12,12 +12,30 @@ const LEGACY_FILES: &[&str] = &[
 ];
 
 const LEGACY_STEPS: &[(&str, &str)] = &[
-    (".github/workflows/baseline-policy.yml", "run: python3 scripts/validate_baseline.py ."),
-    (".github/workflows/repository-relationships.yml", "run: python3 scripts/validate_repository_relationships.py ."),
-    (".github/workflows/fleet-hardening-binding.yml", "python3 -m json.tool policy/ores-fleet-hardening.v1.json >/dev/null"),
-    (".github/workflows/fleet-hardening-binding.yml", "python3 -m json.tool policy/ores-fleet-hardening.v1.schema.json >/dev/null"),
-    (".github/workflows/fleet-hardening-binding.yml", "run: python3 -m unittest discover -s tests -p 'test_fleet_hardening_binding.py'"),
-    (".github/workflows/fleet-hardening-binding.yml", "run: python3 scripts/validate_fleet_hardening_binding.py --source-root .policy-source"),
+    (
+        ".github/workflows/baseline-policy.yml",
+        "run: python3 scripts/validate_baseline.py .",
+    ),
+    (
+        ".github/workflows/repository-relationships.yml",
+        "run: python3 scripts/validate_repository_relationships.py .",
+    ),
+    (
+        ".github/workflows/fleet-hardening-binding.yml",
+        "python3 -m json.tool policy/ores-fleet-hardening.v1.json >/dev/null",
+    ),
+    (
+        ".github/workflows/fleet-hardening-binding.yml",
+        "python3 -m json.tool policy/ores-fleet-hardening.v1.schema.json >/dev/null",
+    ),
+    (
+        ".github/workflows/fleet-hardening-binding.yml",
+        "run: python3 -m unittest discover -s tests -p 'test_fleet_hardening_binding.py'",
+    ),
+    (
+        ".github/workflows/fleet-hardening-binding.yml",
+        "run: python3 scripts/validate_fleet_hardening_binding.py --source-root .policy-source",
+    ),
 ];
 
 fn python_file(path: &str) -> bool {
@@ -53,11 +71,14 @@ fn check_file(path: &str) -> Result<(), String> {
 
 fn check_command(path: &str, line: &str) -> Result<(), String> {
     if python_command(line)
-        && !LEGACY_STEPS
-            .iter()
-            .any(|(existing_path, existing_line)| *existing_path == path && *existing_line == line.trim())
+        && !LEGACY_STEPS.iter().any(|(existing_path, existing_line)| {
+            *existing_path == path && *existing_line == line.trim()
+        })
     {
-        return Err(format!("new Python command forbidden: {path}: {}", line.trim()));
+        return Err(format!(
+            "new Python command forbidden: {path}: {}",
+            line.trim()
+        ));
     }
     Ok(())
 }
@@ -66,7 +87,15 @@ fn validate(root: &Path) -> Result<(), String> {
     let output = Command::new("git")
         .arg("-C")
         .arg(root)
-        .args(["ls-files", "-z", "--", "scripts", "tests", "tools", ".github/workflows"])
+        .args([
+            "ls-files",
+            "-z",
+            "--",
+            "scripts",
+            "tests",
+            "tools",
+            ".github/workflows",
+        ])
         .output()
         .map_err(|error| format!("cannot list tracked files: {error}"))?;
     if !output.status.success() {
@@ -74,7 +103,11 @@ fn validate(root: &Path) -> Result<(), String> {
     }
     let mut failures = Vec::new();
     let mut workflow_count = 0;
-    for bytes in output.stdout.split(|byte| *byte == 0).filter(|part| !part.is_empty()) {
+    for bytes in output
+        .stdout
+        .split(|byte| *byte == 0)
+        .filter(|part| !part.is_empty())
+    {
         let path = std::str::from_utf8(bytes).map_err(|_| "non-UTF8 tracked file path")?;
         if let Err(error) = check_file(path) {
             failures.push(error);
@@ -137,7 +170,9 @@ mod tests {
     fn catches_new_python_commands() {
         assert!(check_command(".github/workflows/new.yml", "shell: python").is_err());
         assert!(check_command(".github/workflows/new.yml", "run: python3 -m unittest").is_err());
-        assert!(check_command(".github/workflows/new.yml", "  python3 scripts/new_tool.py").is_err());
+        assert!(
+            check_command(".github/workflows/new.yml", "  python3 scripts/new_tool.py").is_err()
+        );
         assert!(check_command(".github/workflows/new.yml", "run: cargo test").is_ok());
         assert!(check_command(".github/workflows/new.yml", "# python3 ignored.py").is_ok());
     }
