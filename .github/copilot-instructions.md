@@ -79,3 +79,12 @@ Never print, log, commit, paste into issues, include in fixtures, or expose toke
 
 Use focused branches and pull requests. Link the relevant Linear issue or project. Explain behavior, risks, migration and roll-forward considerations, security impact, tests run, conflicts and their semantic resolution, and cross-repository dependencies. Never report a branch, commit, pull request, merge, deployment, test run, or external update as complete without authoritative remote evidence.
 <!-- ore-org-baseline:end -->
+
+<!-- rust-first-automation:begin -->
+## Use Rust, not Python, for scripts and tests
+
+- Do not create Python scripts or Python test suites for CI, build, security validation, code generation, release automation, migrations, or maintenance. Use Rust (.rs), cargo test, cargo fmt, and cargo clippy instead; minimal shell/YAML wrappers are permitted.
+- Do not introduce new Python commands or shell: python steps into workflows. Python application code requires a separately documented product-specific exception, not an automation exception.
+- Existing Python validators remain temporary migration debt; preserve their checks and fail-closed behavior until reviewed, parity-tested Rust replacements are active on exact PR heads.
+- The .github repository documents organization defaults; sibling repositories must explicitly adopt equivalent workflows and agent instructions.
+<!-- rust-first-automation:end -->
