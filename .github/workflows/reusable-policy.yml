@@ -31,25 +31,114 @@ jobs:
             echo "Unresolved conflict marker detected" >&2
             exit 1
           fi
-      - name: Require immutable external Action pins
-        shell: python
+      - name: Verify immutable external Action pins with Rust
+        shell: bash
         run: |
-          from pathlib import Path
-          import re
-          bad = []
-          for path in Path('.github/workflows').glob('*.y*ml'):
-              for number, line in enumerate(path.read_text(encoding='utf-8').splitlines(), 1):
-                  match = re.search(r'^\s*(?:-\s+)?uses:\s*([^\s#]+)', line)
-                  if not match:
-                      continue
-                  ref = match.group(1)
-                  if ref.startswith('./'):
-                      continue
-                  if ref.startswith('docker://'):
-                      if not re.search(r'@sha256:[0-9a-fA-F]{64}$', ref):
-                          bad.append(f"{path}:{number}: {ref}")
-                      continue
-                  if not re.search(r'@[0-9a-fA-F]{40}$', ref):
-                      bad.append(f"{path}:{number}: {ref}")
-          if bad:
-              raise SystemExit("External Actions must use full commit SHAs:\n" + "\n".join(bad))
+          set -euo pipefail
+          cat > "$RUNNER_TEMP/validate-action-pins.rs" <<'RUST'
+          use std::env;
+          use std::fs;
+          use std::path::Path;
+          use std::process;
+          
+          fn pinned(reference: &str) -> bool {
+              if reference.starts_with("./") {
+                  return true;
+              }
+              if let Some(image) = reference.strip_prefix("docker://") {
+                  return image
+                      .rsplit_once("@sha256:")
+                      .map(|(source, hash)| {
+                          !source.is_empty() && hash.len() == 64 && hash.bytes().all(|c| c.is_ascii_hexdigit())
+                      })
+                      .unwrap_or(false);
+              }
+              reference
+                  .rsplit_once('@')
+                  .map(|(source, hash)| {
+                      !source.is_empty() && hash.len() == 40 && hash.bytes().all(|c| c.is_ascii_hexdigit())
+                  })
+                  .unwrap_or(false)
+          }
+          
+          fn uses_reference(line: &str) -> Option<&str> {
+              let text = line.trim_start();
+              let text = text.strip_prefix("- ").unwrap_or(text).trim_start();
+              text.strip_prefix("uses:")
+                  .map(|ref_line| ref_line.split_whitespace().next().unwrap_or(""))
+          }
+          
+          fn validate(root: &Path) -> Result<(), String> {
+              let mut invalid = Vec::new();
+              let mut count = 0;
+              for item in fs::read_dir(root).map_err(|e| format!("cannot read workflows: {e}"))? {
+                  let path = item.map_err(|e| format!("workflow listing failed: {e}"))?.path();
+                  if !path.extension().is_some_and(|e| e == "yml" || e == "yaml") {
+                      continue;
+                  }
+                  count += 1;
+                  let text = fs::read_to_string(&path)
+                      .map_err(|e| format!("cannot read {}: {e}", path.display()))?;
+                  for (number, line) in text.lines().enumerate() {
+                      if let Some(reference) = uses_reference(line) {
+                          if !pinned(reference) {
+                              invalid.push(format!("{}:{}: {reference}", path.display(), number + 1));
+                          }
+                      }
+                  }
+              }
+              if count == 0 {
+                  return Err("no workflow files found; fail closed".into());
+              }
+              if invalid.is_empty() {
+                  Ok(())
+              } else {
+                  Err(format!("External Actions must use full commit SHAs:\n{}", invalid.join("\n")))
+              }
+          }
+          
+          fn main() {
+              let root = env::args().nth(1).unwrap_or_else(|| ".github/workflows".to_string());
+              if let Err(error) = validate(Path::new(&root)) {
+                  eprintln!("{error}");
+                  process::exit(1);
+              }
+          }
+          
+          #[cfg(test)]
+          mod tests {
+              use super::*;
+          
+              #[test]
+              fn accepts_immutable_actions_and_local_uses() {
+                  assert!(pinned(&format!("actions/checkout@{}", "a".repeat(40))));
+                  assert!(pinned("./.github/actions/test"));
+              }
+          
+              #[test]
+              fn rejects_short_tags_and_truncated_hashes() {
+                  assert!(!pinned("actions/checkout@main"));
+                  assert!(!pinned("actions/checkout@v4"));
+                  assert!(!pinned(&format!("actions/checkout@{}", "a".repeat(39))));
+                  assert!(!pinned("actions/checkout"));
+              }
+          
+              #[test]
+              fn validates_docker_digest_only() {
+                  assert!(pinned(&format!("docker://alpine@sha256:{}", "f".repeat(64))));
+                  assert!(!pinned("docker://alpine:latest"));
+                  assert!(!pinned(&format!("docker://alpine@sha256:{}", "g".repeat(64))));
+              }
+          
+              #[test]
+              fn reads_uses_lines_only() {
+                  assert_eq!(uses_reference("  - uses: actions/checkout@abc # comment"), Some("actions/checkout@abc"));
+                  assert_eq!(uses_reference("    uses: actions/checkout@abc"), Some("actions/checkout@abc"));
+                  assert_eq!(uses_reference("  run: echo uses: foo"), None);
+              }
+          }
+          RUST
+          rustc --edition=2021 --test "$RUNNER_TEMP/validate-action-pins.rs" -o "$RUNNER_TEMP/test-action-pins"
+          "$RUNNER_TEMP/test-action-pins"
+          rustc --edition=2021 "$RUNNER_TEMP/validate-action-pins.rs" -o "$RUNNER_TEMP/check-action-pins"
+          "$RUNNER_TEMP/check-action-pins" .github/workflows
